@@ -6,4 +6,5 @@ func main() {
 
 func Cicd() {
 	print("hello cicd test!")
+	print("开始")
 }
