@@ -10,6 +10,11 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
