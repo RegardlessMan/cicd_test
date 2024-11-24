@@ -1,10 +1,19 @@
 package main
 
-func main() {
-	print("hello cicd!")
-}
+import (
+	"cicd_test/config"
+	"cicd_test/router"
+)
 
-func Cicd() {
-	print("hello cicd test!")
-	print("开始")
+func main() {
+	//初始化配置
+	config.InitConfig()
+	//初始化路由
+	engine := router.SetRouter()
+	port := config.AppConfig.App.Port
+	if port == "" {
+		port = ":8080"
+	}
+
+	engine.Run(port)
 }
