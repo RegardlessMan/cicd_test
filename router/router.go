@@ -1,8 +1,8 @@
 package router
 
 import (
+	"cicd_test/controllers"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func SetRouter() *gin.Engine {
@@ -10,17 +10,9 @@ func SetRouter() *gin.Engine {
 
 	auth := r.Group("/api/auth")
 	{
-		auth.POST("/login", func(c *gin.Context) {
-			c.AbortWithStatusJSON(http.StatusOK, gin.H{
-				"msg": "Login Success!",
-			})
-		})
+		auth.POST("/login", controllers.Login)
 
-		auth.POST("/register", func(c *gin.Context) {
-			c.AbortWithStatusJSON(http.StatusOK, gin.H{
-				"msg": "Register Success!",
-			})
-		})
+		auth.POST("/register", controllers.Register)
 	}
 
 	return r
