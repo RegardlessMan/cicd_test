@@ -2,6 +2,7 @@ package router
 
 import (
 	"cicd_test/controllers"
+	"cicd_test/middlewares"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,5 +16,12 @@ func SetRouter() *gin.Engine {
 		auth.POST("/register", controllers.Register)
 	}
 
+	api := r.Group("/api")
+	api.GET("/exchangeRates", controllers.GetExchangeRates)
+	api.Use(middlewares.AuthMiddleware())
+	{
+		api.POST("/exchangeRates", controllers.CreateExchangeRate)
+
+	}
 	return r
 }

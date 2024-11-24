@@ -9,7 +9,9 @@ package controllers
 import (
 	"cicd_test/global"
 	"cicd_test/models"
+	"errors"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 	"net/http"
 )
 
@@ -36,4 +38,18 @@ func CreateExchangeRate(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, gin.H{"message": "Exchange Rate Created Successfully"})
+}
+
+func GetExchangeRates(ctx *gin.Context) {
+	var exchangeRates []models.ExchangeRate
+
+	if err := global.Db.Find(&exchangeRates).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		} else {
+			ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		}
+		return
+	}
+	ctx.JSON(http.StatusOK, exchangeRates)
 }
