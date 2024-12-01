@@ -24,7 +24,8 @@ func SetRouter() *gin.Engine {
 		api.POST("/articles", controllers.CreateArticle)
 		api.GET("/articles", controllers.GetArticles)
 		api.GET("/articles/:id", controllers.GetArticleById)
-
+		api.POST("/articles/like", controllers.LikeArticle)
+		api.POST("/articles/unlike", controllers.UnlikeArticle)
 	}
 	return r
 }

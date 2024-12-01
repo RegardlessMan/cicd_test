@@ -67,3 +67,29 @@ func GetArticleById(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, article)
 }
+
+func LikeArticle(ctx *gin.Context) {
+	id := ctx.Param("id")
+
+	first := global.Db.First(&models.Article{}, id)
+	if errors.Is(first.Error, gorm.ErrRecordNotFound) {
+		ctx.JSON(http.StatusNotFound, gin.H{"error": "Article not found"})
+		return
+	}
+
+	global.RedisDb.Incr("article:" + id + ":likes")
+	ctx.JSON(http.StatusOK, gin.H{"message": "Article liked successfully"})
+}
+
+func UnlikeArticle(ctx *gin.Context) {
+	id := ctx.Param("id")
+
+	first := global.Db.First(&models.Article{}, id)
+	if errors.Is(first.Error, gorm.ErrRecordNotFound) {
+		ctx.JSON(http.StatusNotFound, gin.H{"error": "Article not found"})
+		return
+	}
+
+	global.RedisDb.Decr("article:" + id + ":likes")
+	ctx.JSON(http.StatusOK, gin.H{"message": "Article unliked successfully"})
+}

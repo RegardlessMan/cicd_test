@@ -3,6 +3,11 @@ app:
   port: :8000
 
 database:
-  dsn : root:dyj3101631524@tcp(127.0.0.1:3306)/cicd_demo?charset=utf8mb4&parseTime=True&loc=Local
+  dsn: root:dyj3101631524@tcp(127.0.0.1:3306)/cicd_demo?charset=utf8mb4&parseTime=True&loc=Local
   MaxIdleConns: 11
   MaxOpenCons: 114
+
+redis:
+  host: 127.0.0.1:6379
+  password: root
+  db: 0
